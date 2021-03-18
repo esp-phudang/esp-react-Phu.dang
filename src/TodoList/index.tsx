@@ -1,7 +1,6 @@
 import React from "react";
 
-export default function  (props) {
-  const { todoList } = props;
+export default function TodoList({ todoList }) {
   return (
     <>
       {todoList.map((item, index) => (

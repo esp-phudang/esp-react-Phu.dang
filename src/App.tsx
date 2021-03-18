@@ -3,22 +3,19 @@ import { Input } from "./Input";
 import TodoList from "./TodoList";
 
 const App = () => {
-  const [value, setValue] = useState("");
-  const todoList = [];
+  const [todoList, setTodoList] = useState([]);
   console.log("reseted");
   const handleSetValue = (value) => {
-    console.log(value);
-    todoList.push(value);
-    console.log("todoList", todoList);
+    let subTodoList = [...todoList, value];
+    setTodoList(subTodoList);
+    console.log("list", todoList);
   };
   return (
     <div className="body">
       <div className="container">
         <div className="todos">Todos</div>
-        <Input handleSetValue={handleSetValue} value={value} />
+        <Input handleSetValue={handleSetValue} />
         <TodoList todoList={todoList} />
-
-        <div>asda</div>
       </div>
     </div>
   );
