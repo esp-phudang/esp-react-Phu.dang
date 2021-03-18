@@ -12,8 +12,8 @@ const App = () => {
   };
   return (
     <div className="body">
-      <div className="container">
-        <div className="todos">Todos</div>
+      <div className="todos">
+        <div className="todos-title">Todos</div>
         <Input handleSetValue={handleSetValue} />
         <TodoList todoList={todoList} />
       </div>

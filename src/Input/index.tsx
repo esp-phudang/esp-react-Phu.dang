@@ -3,7 +3,7 @@ export const Input = (props) => {
   const { handleSetValue } = props;
   const [inputValue, setInputValue] = useState("");
   return (
-    <div className="add-new-container">
+    <div className="todos-add-new">
       <input
         id="myInput"
         placeholder="What needs to be done?"
