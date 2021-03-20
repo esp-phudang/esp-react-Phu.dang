@@ -5,17 +5,20 @@ import TodoList from "./TodoList";
 const App = () => {
   const [todoList, setTodoList] = useState([]);
   console.log("reseted");
-  const handleSetValue = (value) => {
-    let subTodoList = [...todoList, value];
+  const handleAdd = (value, id) => {
+    let subTodoList = [...todoList, { content: value, id: String(id) }];
     setTodoList(subTodoList);
     console.log("list", todoList);
+  };
+  const handleDelete = (newTodoList) => {
+    setTodoList(newTodoList);
   };
   return (
     <div className="body">
       <div className="todos">
         <div className="todos-title">Todos</div>
-        <Input handleSetValue={handleSetValue} />
-        <TodoList todoList={todoList} />
+        <Input handleAdd={handleAdd}  />
+        <TodoList todoList={todoList} handleDelete={handleDelete} />
       </div>
     </div>
   );

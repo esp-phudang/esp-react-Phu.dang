@@ -1,29 +1,45 @@
 import React, { useState } from "react";
 
-export default function TodoList({ todoList }) {
+export default function TodoList({ todoList, handleDelete }) {
   const [checkList, setCheckList] = useState([]);
-
-  checkList.forEach((element) => {
-    document.getElementById(`item ${element}`).classList.add("checked");
-  });
+  //add item id to check List
   const onCheck = (e) => {
     let subCheckList = [];
-    if (!checkList.includes(e.target.id)) {
+    //check whether that id is in checklist or not
+    //if yes, remove id from checklist
+    if (checkList.includes(e.target.id)) {
+      setCheckList(checkList.filter((item) => item !== e.target.id));
+      document.getElementById(`No ${e.target.id}`).classList.remove("checked");
+      console.log("todoList", todoList);
+    } 
+    //if no, add id to check list
+    else {
       subCheckList = [...checkList, e.target.id];
       setCheckList(subCheckList);
-    } else {
-      setCheckList(checkList.filter((item) => item !== e.target.id));
-      document.getElementById(`item ${e.target.id}`).classList.remove("checked");
-
+      console.log("todoList", todoList);
     }
+  };
+  //for each item on checkList, add class Check to change css
+  checkList.forEach((element) => {
+    document.getElementById(`No ${element}`).classList.add("checked");
+  });
+  const onDelete = (deleteItem) => {
+    //get the index of deleted item
+    const deleteId = todoList
+      .map((item) => item.id)
+      .indexOf(deleteItem.target.id);
+    //get deleted item
+    const deletedItem = todoList[deleteId];
+    //trigger function with new array not including deleted item
+    handleDelete(todoList.filter((item) => item !== deletedItem));
   };
   return (
     <>
-      {todoList.map((item, index) => {
+      {todoList.map((item) => {
         return (
-          <div className="todos-item" key={index}>
+          <div className="todos-item" key={item.id}>
             <svg
-              id={index}
+              id={item.id}
               height="34"
               width="34"
               onClick={(e) => {
@@ -35,11 +51,19 @@ export default function TodoList({ todoList }) {
                 cy="17"
                 r="15"
                 stroke="black"
-                stroke-width="2"
+                strokeWidth="2"
                 fill="none"
               />
             </svg>
-            <div id={`item ${index}`}>{item}</div>
+            <input id={`No ${item.id}`} value={item.content} />
+            <div
+              id={item.id}
+              onClick={(e) => {
+                onDelete(e);
+              }}
+            >
+              Delete
+            </div>
           </div>
         );
       })}

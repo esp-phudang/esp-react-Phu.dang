@@ -14,3 +14,5 @@
     - what is package-lock.json
     - setup sass
     - setup webpack to compile all module into a bundler
+    - State and prop change will trigger re-rendering the component but dont clear the states
+    
