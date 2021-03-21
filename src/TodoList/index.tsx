@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 
-export default function TodoList({ todoList, handleDelete }) {
+export default function TodoList({ todoList, handleDelete, handleUpdateEdit }) {
   const [checkList, setCheckList] = useState([]);
+  const [editContent, setEditContent] = useState();
+  const [editId, setEditId] = useState();
   //add item id to check List
   const onCheck = (e) => {
     let subCheckList = [];
@@ -11,7 +13,7 @@ export default function TodoList({ todoList, handleDelete }) {
       setCheckList(checkList.filter((item) => item !== e.target.id));
       document.getElementById(`No ${e.target.id}`).classList.remove("checked");
       console.log("todoList", todoList);
-    } 
+    }
     //if no, add id to check list
     else {
       subCheckList = [...checkList, e.target.id];
@@ -19,10 +21,12 @@ export default function TodoList({ todoList, handleDelete }) {
       console.log("todoList", todoList);
     }
   };
+
   //for each item on checkList, add class Check to change css
   checkList.forEach((element) => {
-    document.getElementById(`No ${element}`).classList.add("checked");
+    document.getElementById(`No ${element}`)?.classList.add("checked");
   });
+
   const onDelete = (deleteItem) => {
     //get the index of deleted item
     const deleteId = todoList
@@ -32,6 +36,23 @@ export default function TodoList({ todoList, handleDelete }) {
     const deletedItem = todoList[deleteId];
     //trigger function with new array not including deleted item
     handleDelete(todoList.filter((item) => item !== deletedItem));
+  };
+
+  const onEdit = (e) => {
+    //get value of edit item, error "value" is not property of HTMLElement due to using .value,
+    //so I use array destrucering instead
+    const editItemContent = document.getElementById(`No ${e.target.id}`)[
+      "value"
+    ];
+    //set id of what item is edited
+    setEditId(`No ${e.target.id}`);
+    //set content of edited item
+    setEditContent(editItemContent);
+    console.log("editItemContent", editItemContent);
+  };
+
+  const onCancelEdit = () => {
+    setEditId(null);
   };
   return (
     <>
@@ -55,7 +76,39 @@ export default function TodoList({ todoList, handleDelete }) {
                 fill="none"
               />
             </svg>
-            <input id={`No ${item.id}`} value={item.content} />
+            <input
+              id={`No ${item.id}`}
+              onChange={(e) => {
+                //set temporary edit content
+                setEditContent(e.target.value);
+              }}
+              //if item's id is the same as editId, input will display value of temporary edit content
+              value={editId === `No ${item.id}` ? editContent : item.content}
+            />
+            {!(editId === `No ${item.id}`) && (
+              <div
+                id={item.id}
+                onClick={(e) => {
+                  onEdit(e);
+                }}
+              >
+                Edit
+              </div>
+            )}
+            {editId === `No ${item.id}` && (
+              <div
+                onClick={() => {
+                  handleUpdateEdit({ content: editContent, id: item.id });
+                  setEditId(null);
+                }}
+              >
+                Save
+              </div>
+            )}
+
+            {editId === `No ${item.id}` && (
+              <div onClick={onCancelEdit}>Cancel</div>
+            )}
             <div
               id={item.id}
               onClick={(e) => {
