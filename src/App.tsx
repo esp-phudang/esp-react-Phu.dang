@@ -6,9 +6,11 @@ const App = () => {
   const [todoList, setTodoList] = useState([]);
   console.log("reseted");
   const handleAdd = (value, id) => {
-    let subTodoList = [...todoList, { content: value, id: String(id) }];
+    let subTodoList = [
+      ...todoList,
+      { content: value, id: String(id), status: "unchecked" },
+    ];
     setTodoList(subTodoList);
-    console.log("list", todoList);
   };
   const handleDelete = (newTodoList) => {
     setTodoList(newTodoList);
@@ -23,12 +25,16 @@ const App = () => {
     }
     setTodoList(todoList);
   };
+  const handleUpdateChecked = (updateChecked) => {
+    setTodoList(updateChecked);
+  };
   return (
     <div className="body">
       <div className="todos">
         <div className="todos-title">Todos</div>
         <Input handleAdd={handleAdd} />
         <TodoList
+          handleUpdateChecked={handleUpdateChecked}
           todoList={todoList}
           handleUpdateEdit={handleUpdateEdit}
           handleDelete={handleDelete}

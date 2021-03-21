@@ -15,4 +15,4 @@
     - setup sass
     - setup webpack to compile all module into a bundler
     - State and prop change will trigger re-rendering the component but dont clear the states
-    
+    - using const array b = array a is shallow copy, it make items of two array have the same references, means a value of array b's item changes cause the change to the same item in array a

@@ -1,37 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import MenuBar from "../Menu Bar";
 
-export default function TodoList({ todoList, handleDelete, handleUpdateEdit }) {
-  const [checkList, setCheckList] = useState([]);
+export default function TodoList({
+  todoList,
+  handleDelete,
+  handleUpdateEdit,
+  handleUpdateChecked,
+}) {
   const [editContent, setEditContent] = useState();
   const [editId, setEditId] = useState();
+  const [filterState, setFilterState] = useState();
+  useEffect(() => {
+    console.log("todoList", todoList);
+  }, [todoList]);
   //add item id to check List
   const onCheck = (e) => {
-    let subCheckList = [];
-    //check whether that id is in checklist or not
-    //if yes, remove id from checklist
-    if (checkList.map((item) => item.id).includes(e.target.id)) {
-      setCheckList(checkList.filter((item) => item.id !== e.target.id));
-      document.getElementById(`No ${e.target.id}`).classList.remove("checked");
-      console.log("checkList", checkList);
+    const checkedId = e.target.id;
+    const checkedIndex = todoList.map((item) => item.id).indexOf(checkedId);
+    // I used subTodoList = todoList but it is shallow copy so todoList's items
+    //will change value right after revalue item of subTodoList
+    //=> not trigger rerender
+    // using deep copy instead with JSON parse, stringify
+    const subTodoList = JSON.parse(JSON.stringify(todoList));
+    if (subTodoList[checkedIndex].status === "unchecked") {
+      subTodoList[checkedIndex].status = "checked";
+    } else if (subTodoList[checkedIndex].status === "checked") {
+      subTodoList[checkedIndex].status = "unchecked";
     }
-    //if no, add id to check list
-    else {
-      const checkItemContent = document.getElementById(`No ${e.target.id}`)[
-        "value"
-      ];
-      subCheckList = [
-        ...checkList,
-        { content: checkItemContent, id: e.target.id },
-      ];
-      setCheckList(subCheckList);
-      console.log("checkList", checkList);
-    }
+    handleUpdateChecked(subTodoList);
   };
-
-  //for each item on checkList, add class Check to change css
-  checkList.forEach((item) => {
-    document.getElementById(`No ${item.id}`)?.classList.add("checked");
-  });
 
   const onDelete = (deleteItem) => {
     //get the index of deleted item
@@ -60,8 +57,18 @@ export default function TodoList({ todoList, handleDelete, handleUpdateEdit }) {
   const onCancelEdit = () => {
     setEditId(null);
   };
+  const handleShowChecked = () => {
+    setFilterState("check");
+  };
+  const handleShowUnChecked = () => {
+    setFilterState("uncheck");
+  };
+  const handleShowAll = () => {
+    setFilterState("all");
+  };
+
   return (
-    <>
+    <div style={{ width: "100%" }}>
       {todoList.map((item) => {
         return (
           <div className="todos-item" key={item.id}>
@@ -83,6 +90,7 @@ export default function TodoList({ todoList, handleDelete, handleUpdateEdit }) {
               />
             </svg>
             <input
+              className={item.status === "checked" ? "checked" : null}
               id={`No ${item.id}`}
               onChange={(e) => {
                 //set temporary edit content
@@ -126,6 +134,11 @@ export default function TodoList({ todoList, handleDelete, handleUpdateEdit }) {
           </div>
         );
       })}
-    </>
+      <MenuBar
+        handleShowChecked={handleShowChecked}
+        handleShowUnChecked={handleShowUnChecked}
+        handleShowAll={handleShowAll}
+      />
+    </div>
   );
 }
