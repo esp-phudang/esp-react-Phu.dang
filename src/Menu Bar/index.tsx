@@ -1,9 +1,17 @@
 import React from "react";
 
-const MenuBar = ({ handleShowChecked, handleShowUnChecked, handleShowAll }) => {
+const MenuBar = ({
+  todoList,
+  handleShowChecked,
+  handleShowUnChecked,
+  handleShowAll,
+}) => {
+  const itemLeft = todoList
+    .map((item) => item.status)
+    .filter((status) => status === "unchecked").length;
   return (
     <div className="menu-bar">
-      <div>1 item left</div>
+      <div>{itemLeft} item left</div>
       <div onClick={handleShowAll}>All</div>
       <div onClick={handleShowUnChecked}>Active</div>
       <div onClick={handleShowChecked}>Completed</div>

@@ -10,7 +10,7 @@ export default function TodoList({
 }) {
   const [editContent, setEditContent] = useState();
   const [editId, setEditId] = useState();
-  const [filterState, setFilterState] = useState("all");
+  const [filterState, setFilterState] = useState(["checked", "unchecked"]);
   useEffect(() => {
     console.log("todoList", todoList);
   }, [todoList]);
@@ -59,35 +59,39 @@ export default function TodoList({
     setEditId(null);
   };
   const handleShowChecked = () => {
-    setFilterState("check");
+    setFilterState(["checked"]);
   };
   const handleShowUnChecked = () => {
-    setFilterState("uncheck");
+    setFilterState(["unchecked"]);
   };
   const handleShowAll = () => {
-    setFilterState("all");
+    setFilterState(["checked", "unchecked"]);
   };
 
   return (
     <div style={{ width: "100%" }}>
       {todoList.map((item, index) => {
         return (
-          <TodoCard
-            key={index}
-            item={item}
-            editId={editId}
-            editContent={editContent}
-            onCheck={onCheck}
-            onEdit={onEdit}
-            onCancelEdit={onCancelEdit}
-            onDelete={onDelete}
-            setEditId={setEditId}
-            setEditContent={setEditContent}
-            handleUpdateEdit={handleUpdateEdit}
-          />
+          //set filterState is an array, filter todoItem depends on state in filterState
+          filterState.includes(item.status) && (
+            <TodoCard
+              key={index}
+              item={item}
+              editId={editId}
+              editContent={editContent}
+              onCheck={onCheck}
+              onEdit={onEdit}
+              onCancelEdit={onCancelEdit}
+              onDelete={onDelete}
+              setEditId={setEditId}
+              setEditContent={setEditContent}
+              handleUpdateEdit={handleUpdateEdit}
+            />
+          )
         );
       })}
       <MenuBar
+        todoList={todoList}
         handleShowChecked={handleShowChecked}
         handleShowUnChecked={handleShowUnChecked}
         handleShowAll={handleShowAll}
