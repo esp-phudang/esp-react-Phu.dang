@@ -9,22 +9,28 @@ export default function TodoList({ todoList, handleDelete, handleUpdateEdit }) {
     let subCheckList = [];
     //check whether that id is in checklist or not
     //if yes, remove id from checklist
-    if (checkList.includes(e.target.id)) {
-      setCheckList(checkList.filter((item) => item !== e.target.id));
+    if (checkList.map((item) => item.id).includes(e.target.id)) {
+      setCheckList(checkList.filter((item) => item.id !== e.target.id));
       document.getElementById(`No ${e.target.id}`).classList.remove("checked");
-      console.log("todoList", todoList);
+      console.log("checkList", checkList);
     }
     //if no, add id to check list
     else {
-      subCheckList = [...checkList, e.target.id];
+      const checkItemContent = document.getElementById(`No ${e.target.id}`)[
+        "value"
+      ];
+      subCheckList = [
+        ...checkList,
+        { content: checkItemContent, id: e.target.id },
+      ];
       setCheckList(subCheckList);
-      console.log("todoList", todoList);
+      console.log("checkList", checkList);
     }
   };
 
   //for each item on checkList, add class Check to change css
-  checkList.forEach((element) => {
-    document.getElementById(`No ${element}`)?.classList.add("checked");
+  checkList.forEach((item) => {
+    document.getElementById(`No ${item.id}`)?.classList.add("checked");
   });
 
   const onDelete = (deleteItem) => {
