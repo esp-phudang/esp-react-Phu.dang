@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MenuBar from "../Menu Bar";
+import TodoCard from "../TodoCard/TodoCard";
 
 export default function TodoList({
   todoList,
@@ -9,7 +10,7 @@ export default function TodoList({
 }) {
   const [editContent, setEditContent] = useState();
   const [editId, setEditId] = useState();
-  const [filterState, setFilterState] = useState();
+  const [filterState, setFilterState] = useState("all");
   useEffect(() => {
     console.log("todoList", todoList);
   }, [todoList]);
@@ -69,69 +70,21 @@ export default function TodoList({
 
   return (
     <div style={{ width: "100%" }}>
-      {todoList.map((item) => {
+      {todoList.map((item, index) => {
         return (
-          <div className="todos-item" key={item.id}>
-            <svg
-              id={item.id}
-              height="34"
-              width="34"
-              onClick={(e) => {
-                onCheck(e);
-              }}
-            >
-              <circle
-                cx="17"
-                cy="17"
-                r="15"
-                stroke="black"
-                strokeWidth="2"
-                fill="none"
-              />
-            </svg>
-            <input
-              className={item.status === "checked" ? "checked" : null}
-              id={`No ${item.id}`}
-              onChange={(e) => {
-                //set temporary edit content
-                setEditContent(e.target.value);
-              }}
-              //if item's id is the same as editId, input will display value of temporary edit content
-              value={editId === `No ${item.id}` ? editContent : item.content}
-            />
-            {!(editId === `No ${item.id}`) && (
-              <div
-                id={item.id}
-                onClick={(e) => {
-                  onEdit(e);
-                }}
-              >
-                Edit
-              </div>
-            )}
-            {editId === `No ${item.id}` && (
-              <div
-                onClick={() => {
-                  handleUpdateEdit({ content: editContent, id: item.id });
-                  setEditId(null);
-                }}
-              >
-                Save
-              </div>
-            )}
-
-            {editId === `No ${item.id}` && (
-              <div onClick={onCancelEdit}>Cancel</div>
-            )}
-            <div
-              id={item.id}
-              onClick={(e) => {
-                onDelete(e);
-              }}
-            >
-              Delete
-            </div>
-          </div>
+          <TodoCard
+            key={index}
+            item={item}
+            editId={editId}
+            editContent={editContent}
+            onCheck={onCheck}
+            onEdit={onEdit}
+            onCancelEdit={onCancelEdit}
+            onDelete={onDelete}
+            setEditId={setEditId}
+            setEditContent={setEditContent}
+            handleUpdateEdit={handleUpdateEdit}
+          />
         );
       })}
       <MenuBar
