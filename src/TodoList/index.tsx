@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MenuBar from "../Menu Bar";
+import MenuBar from "../MenuBar";
 import TodoCard from "../TodoCard/TodoCard";
 
 export default function TodoList({
