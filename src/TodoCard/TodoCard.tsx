@@ -11,9 +11,11 @@ const TodoCard = (props) => {
     setEditContent,
     editId,
     editContent,
+    draggable,
+    drag
   } = props;
   return (
-    <div className="todos-item" key={item.id}>
+    <div  onDragStart={drag} draggable={draggable} className="todos-item"  id={item.id} >
       <svg
         id={item.id}
         height="34"

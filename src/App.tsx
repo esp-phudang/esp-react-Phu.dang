@@ -4,10 +4,18 @@ import SortBar from "./SortBar";
 import TodoList from "./TodoList";
 
 const App = () => {
-  var current = new Date();
   const [todoList, setTodoList] = useState([]);
-  console.log("🚀 ~ file: App.tsx ~ line 9 ~ App ~ todoList", todoList)
-  const now = new Date()
+  const now = new Date();
+//get todoList from localstorage everytime user open page
+  useEffect(() => {
+    setTodoList(JSON.parse(window.localStorage.getItem("todoList")));
+  }, []);
+
+  const updateListAndSaveToLocal = (list) => {
+    setTodoList(list);
+    window.localStorage.setItem("todoList", JSON.stringify(list));
+  };
+
   const handleAdd = (value, id) => {
     let subTodoList = [
       ...todoList,
@@ -19,9 +27,7 @@ const App = () => {
       },
     ];
     setTodoList(subTodoList);
-  };
-  const handleDelete = (newTodoList) => {
-    setTodoList(newTodoList);
+    window.localStorage.setItem("todoList", JSON.stringify(subTodoList));
   };
 
   const handleUpdateEdit = (item) => {
@@ -32,26 +38,21 @@ const App = () => {
       todoList[indexEditedItem] = item;
     }
     setTodoList(todoList);
+    window.localStorage.setItem("todoList", JSON.stringify(todoList));
   };
-  const handleUpdateChecked = (updateChecked) => {
-    setTodoList(updateChecked);
-  };
-  const handleSort = (sortedArray)=>{
-    setTodoList(sortedArray)
-    console.log("App updated: ",sortedArray)
 
-  }
   return (
     <div className="body">
       <div className="todos">
         <div className="todos-title">Todos</div>
-        <SortBar handleSort={handleSort} todoList={todoList}/>
+        <SortBar handleSort={updateListAndSaveToLocal} todoList={todoList} />
         <Input handleAdd={handleAdd} />
         <TodoList
-          handleUpdateChecked={handleUpdateChecked}
+          onUpdateNewList={updateListAndSaveToLocal}
+          handleUpdateChecked={updateListAndSaveToLocal}
           todoList={todoList}
           handleUpdateEdit={handleUpdateEdit}
-          handleDelete={handleDelete}
+          handleDelete={updateListAndSaveToLocal}
         />
       </div>
     </div>

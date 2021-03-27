@@ -4,7 +4,6 @@ import React, { useState } from "react";
 const SortBar = ({ handleSort, todoList }) => {
   const [alphabet, setAlphabet] = useState(true);
   const [time, setTime] = useState(true);
-  console.log("🚀 ~ file: index.tsx ~ line 7 ~ SortBar ~ time", time)
 
   const sortByAlphabet = () => {
     setAlphabet(!alphabet);
@@ -18,7 +17,6 @@ const SortBar = ({ handleSort, todoList }) => {
         return contentA < contentB ? -1 : 1;
       }
     });
-    console.log("todoList: ", todoList);
     handleSort(sortedArray);
   };
 
@@ -28,7 +26,6 @@ const SortBar = ({ handleSort, todoList }) => {
       time ? a.time - b.time : b.time - a.time
     );
     handleSort(sortedArray);
-    console.log("todoList: ", todoList);
 
   };
 

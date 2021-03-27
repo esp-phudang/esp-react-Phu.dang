@@ -7,13 +7,12 @@ export default function TodoList({
   handleDelete,
   handleUpdateEdit,
   handleUpdateChecked,
+  onUpdateNewList,
 }) {
   const [editContent, setEditContent] = useState();
   const [editId, setEditId] = useState();
   const [filterState, setFilterState] = useState(["checked", "unchecked"]);
-  useEffect(() => {
-    console.log("todoList", todoList);
-  }, [todoList]);
+  console.log(todoList);
   //add item id to check List
   const onCheck = (e) => {
     const checkedId = e.target.id;
@@ -22,7 +21,7 @@ export default function TodoList({
     //will change value right after revalue item of subTodoList
     //=> not trigger rerender
     // using deep copy instead with JSON parse, stringify
-    const subTodoList = JSON.parse(JSON.stringify(todoList));
+    const subTodoList = [...todoList];
     if (subTodoList[checkedIndex].status === "unchecked") {
       subTodoList[checkedIndex].status = "checked";
     } else if (subTodoList[checkedIndex].status === "checked") {
@@ -52,7 +51,6 @@ export default function TodoList({
     setEditId(`No ${e.target.id}`);
     //set content of edited item
     setEditContent(editItemContent);
-    console.log("editItemContent", editItemContent);
   };
 
   const onCancelEdit = () => {
@@ -67,6 +65,26 @@ export default function TodoList({
   const handleShowAll = () => {
     setFilterState(["checked", "unchecked"]);
   };
+  const drag = (e) => {
+    //save id of dragged item
+    e.dataTransfer.setData("text", e.target.id);
+  };
+  const allowDrag = (e) => {
+    //prevent default of onDragOver method - trigger Link
+    e.preventDefault();
+  };
+  const drop = (e) => {
+    //prevent default of onDrop method - trigger Link
+    e.preventDefault();
+    const draggedItem = e.dataTransfer.getData("text");
+    const indexDragItem = todoList.map((item) => item.id).indexOf(draggedItem);
+    const newList = [...todoList];
+    //get id from currentTarget is parent div, cuz event always taked place
+    // in children which is target
+    newList[e.currentTarget.id] = todoList[indexDragItem];
+    newList[indexDragItem] = todoList[e.currentTarget.id];
+    onUpdateNewList(newList);
+  };
 
   return (
     <div style={{ width: "100%" }}>
@@ -74,19 +92,22 @@ export default function TodoList({
         return (
           //set filterState is an array, filter todoItem depends on state in filterState
           filterState.includes(item.status) && (
-            <TodoCard
-              key={index}
-              item={item}
-              editId={editId}
-              editContent={editContent}
-              onCheck={onCheck}
-              onEdit={onEdit}
-              onCancelEdit={onCancelEdit}
-              onDelete={onDelete}
-              setEditId={setEditId}
-              setEditContent={setEditContent}
-              handleUpdateEdit={handleUpdateEdit}
-            />
+            <div key={index} id={index} onDrop={drop} onDragOver={allowDrag}>
+              <TodoCard
+                drag={drag}
+                draggable="true"
+                item={item}
+                editId={editId}
+                editContent={editContent}
+                onCheck={onCheck}
+                onEdit={onEdit}
+                onCancelEdit={onCancelEdit}
+                onDelete={onDelete}
+                setEditId={setEditId}
+                setEditContent={setEditContent}
+                handleUpdateEdit={handleUpdateEdit}
+              />
+            </div>
           )
         );
       })}
