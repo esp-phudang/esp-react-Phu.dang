@@ -12,11 +12,10 @@ export default function TodoList({
   const [editContent, setEditContent] = useState();
   const [editId, setEditId] = useState();
   const [filterState, setFilterState] = useState(["checked", "unchecked"]);
-  console.log(todoList);
   //add item id to check List
   const onCheck = (e) => {
     const checkedId = e.target.id;
-    const checkedIndex = todoList.map((item) => item.id).indexOf(checkedId);
+    const checkedIndex = todoList?.map((item) => item.id).indexOf(checkedId);
     // I used subTodoList = todoList but it is shallow copy so todoList's items
     //will change value right after revalue item of subTodoList
     //=> not trigger rerender
@@ -32,8 +31,7 @@ export default function TodoList({
 
   const onDelete = (deleteItem) => {
     //get the index of deleted item
-    const deleteId = todoList
-      .map((item) => item.id)
+    const deleteId = todoList?.map((item) => item.id)
       .indexOf(deleteItem.target.id);
     //get deleted item
     const deletedItem = todoList[deleteId];
@@ -88,7 +86,7 @@ export default function TodoList({
 
   return (
     <div style={{ width: "100%" }}>
-      {todoList.map((item, index) => {
+      {todoList?.map((item, index) => {
         return (
           //set filterState is an array, filter todoItem depends on state in filterState
           filterState.includes(item.status) && (

@@ -1,0 +1,25 @@
+@import "./color.scss";
+
+.body {
+  background-color: antiquewhite;
+  width: 100vw;
+  height: 100vh;
+  margin: -8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family:'Courier New', Courier, monospace;
+  .todos{
+    &-title{
+      font-size: 50px;
+    }
+    &-main-container{
+      width:100%;
+      box-shadow: 1px 0px 20px 0px #00000047;
+      border-radius: 3px;
+    }
+  }
+  
+
+  
+}

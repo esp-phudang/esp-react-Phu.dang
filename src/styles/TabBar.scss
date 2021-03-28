@@ -1,0 +1,12 @@
+.tab-bar {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+
+  &-item {
+    border: 1px solid black;
+    width: 30;
+    height: 15;
+    margin-right: 5;
+  }
+}

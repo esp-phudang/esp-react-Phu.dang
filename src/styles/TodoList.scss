@@ -1,52 +1,37 @@
-.body {
-    background-color: antiquewhite;
-    width: 100vw;
-    height: 100vh;
-    margin: -8px;
+.checked {
+    color: red;
+  }
+  .todos {
+    width: 70%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    .checked {
-      color: red;
-    }
-    .todos {
-      width: 70%;
+    height: 500px;
+
+    &-add-new {
+      height: 50px;
+      width: 100%;
       display: flex;
-      flex-direction: column;
+      justify-content: space-around;
       align-items: center;
-      justify-content: center;
-      height: 500px;
-      &-title {
-        color: blueviolet;
-        font-size: 100px;
-        width: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      &-add-new {
-        height: 50px;
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        background-color: white;
-        .add-new {
-          width: 90%;
-          border: none;
-          &:focus {
-            outline: none;
-          }
+      background-color: white;
+      .add-new {
+        width: 90%;
+        border: none;
+        &:focus {
+          outline: none;
         }
       }
-      &-item {
-        background-color: white;
-        width: 100%;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-      }
+    }
+    &-item {
+      background-color: white;
+      width: 100%;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin: -1px auto ;
+
     }
   }
-  

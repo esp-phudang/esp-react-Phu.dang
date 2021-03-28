@@ -16,13 +16,13 @@ export const Input = (props) => {
         onKeyDown={(e) => {
           //defined what key is pressed and if keycode is 13, thats Enter
           if (e.keyCode === 13) {
-            document.getElementById("myBtn").click();
+            document.getElementById("addTodoItem").click();
           }
         }}
         value={inputValue}
       />
       <div
-        id="myBtn"
+        id="addTodoItem"
         onClick={() => {
           const randomNumber = Math.floor(Math.random() * 10000);
           handleAdd(inputValue, randomNumber);

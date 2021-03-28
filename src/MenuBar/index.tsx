@@ -6,9 +6,9 @@ const MenuBar = ({
   handleShowUnChecked,
   handleShowAll,
 }) => {
-  const itemLeft = todoList
+  const itemLeft = todoList ? todoList
     .map((item) => item.status)
-    .filter((status) => status === "unchecked").length;
+    .filter((status) => status === "unchecked").length : ""
   return (
     <div className="menu-bar">
       <div>{itemLeft} item left</div>
