@@ -48,7 +48,7 @@ const TodoCard = (props) => {
         //if item's id is the same as editId, input will display value of temporary edit content
         value={editId === `No ${item.id}` ? editContent : item.content}
       />
-      <div>{String(item.time).slice(,10) + " " + String(item.time).slice(11,19)}</div>
+      <div>{String(item.time).slice(0,10) + " " + String(item.time).slice(11,19)}</div>
       {!(editId === `No ${item.id}`) && (
         <div
           id={item.id}
