@@ -42,8 +42,8 @@ const TodoCard = ({
         height="30px"
         src={
           item.status === "checked"
-            ? "../../public/assets/checked-box.png"
-            : "../../public/assets/box.png"
+            ? "public/assets/checked-box.png"
+            : "public/assets/box.png"
         }
         onClick={(e:any) => {
           onCheck(e);

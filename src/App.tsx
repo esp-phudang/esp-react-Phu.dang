@@ -15,15 +15,15 @@ function App() {
 
   const now = new Date();
   // get todoList from localstorage everytime user open page
-  // useEffect(() => {
-  //   const localData = JSON.parse(
-  //     window.localStorage.getItem("todoObject") || ""
-  //   );
-  //   setTodoObject(localData);
-  //   setCurrentTab(Object.keys(localData)[0]);
-  //   console.log("curret Tab", currentTab);
-  //   setTodoList(localData[Object.keys(localData)[0]]);
-  // }, []);
+  useEffect(() => {
+    const localData = JSON.parse(
+      window.localStorage.getItem("todoObject") || ""
+    );
+    setTodoObject(localData);
+    setCurrentTab(Object.keys(localData)[0]);
+    console.log("curret Tab", currentTab);
+    setTodoList(localData[Object.keys(localData)[0]]);
+  }, []);
   console.log("object", todoObject);
 
   useEffect(() => {

@@ -22,7 +22,15 @@
     - When you drop anything on the child element or any event takes place on the child element, the Event Target is always the child element because that is the place where the event took place. That is the target.
     - if you want to trigger event in parent, call (e.currentTarget.id)
     - using localStorage to store data in local, localStorage store data in string, using JSON strinlify and parse to convert data
+    
+    - TSconfig.json tell typescript the rules you want your code to follow
     - TS is doing its job and tells you that window.document.getElementById("foobar") COULD return something that is null.
-      - If you are absolutely sure that #foobar element DOES exist in your DOM, you can show TS your confidence with a ! operator. const editItem: any = document.getElementById(`No ${e.target.id}`)! 
+    
+    - If you are absolutely sure that #foobar element DOES exist in your DOM, you can show TS your confidence with a ! operator. const editItem: any = document.getElementById(`No ${e.target.id}`)! 
+    - in webpack, set config for ts file with test, use
+
+    - deploy code to netlify, check file base is where your html, css file are put
+
+    
 
     

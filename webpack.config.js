@@ -34,8 +34,11 @@ module.exports = {
         }
       },
       {
+        //for any file with suffix of tsx
         test: /\.tsx?$/,
+        //translate from tsx to sth else
         use: "ts-loader",
+        //ignore this one
         exclude: "/node_modules/",
       },
       {
