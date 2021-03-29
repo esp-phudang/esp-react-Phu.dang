@@ -113,14 +113,15 @@ const App = () => {
         >
           Clear Data
         </div>
-        <SortBar handleSort={updateListAndSaveToLocal} todoList={todoList} />
         <TabBar
+          currentTab={currentTab}
           todoObject={todoObject}
           handleAddTab={handleAddTab}
           setTab={setTab}
         />
         <div className="todos-main-container">
           <Input handleAdd={handleAdd} />
+          <SortBar handleSort={updateListAndSaveToLocal} todoList={todoList} />
           <TodoList
             onUpdateNewList={updateListAndSaveToLocal}
             handleUpdateChecked={updateListAndSaveToLocal}

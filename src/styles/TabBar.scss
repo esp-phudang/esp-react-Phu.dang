@@ -4,9 +4,22 @@
   width: 100%;
 
   &-item {
-    border: 1px solid black;
-    width: 30;
+    padding: 2px 20px;
+    border-right: 1px solid rgba(66, 66, 66, 0.452);
+    width: auto;
     height: 15;
-    margin-right: 5;
+    margin-left: 0;
+    background-color: rgb(218, 216, 216);
+  }
+  &-item-current{
+    padding: 2px 20px;
+    width: auto;
+    height: 15;
+    border-bottom: none;
+    background-color: white;
+    z-index: 3;
+    
+
+
   }
 }

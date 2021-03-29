@@ -30,9 +30,12 @@ const SortBar = ({ handleSort, todoList }) => {
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className="sort-bar">
+      <div/>
       <div onClick={sortByAlphabet}>{alphabet ? "A to B" : "B to A"}</div>
       <div onClick={sortByCreatedTime}>{time ? "latest" : "oldest"}</div>
+      <div/>
+      <div/>
     </div>
   );
 };

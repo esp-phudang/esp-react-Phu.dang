@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-const TabBar = ({ setTab, handleAddTab, todoObject }) => {
+const TabBar = ({ setTab, handleAddTab, todoObject,currentTab }) => {
   const [tabName, setTabName] = useState();
   const chooseTab = (e) => {
     setTab(e);
@@ -35,7 +35,7 @@ const TabBar = ({ setTab, handleAddTab, todoObject }) => {
             <div
               key={index}
               onClick={chooseTab}
-              className="tab-bar-item"
+              className={currentTab === tab ? "tab-bar-item-current" : "tab-bar-item"}
               value={tab}
             >
               {tab}

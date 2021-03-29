@@ -105,6 +105,7 @@ export default function TodoList({
                 setEditContent={setEditContent}
                 handleUpdateEdit={handleUpdateEdit}
               />
+              <hr className="bottom-line"/>
             </div>
           )
         );
