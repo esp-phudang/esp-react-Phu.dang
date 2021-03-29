@@ -22,7 +22,7 @@ const MenuBar = ({
         .filter((status: string) => status === "unchecked").length
     : "";
   return (
-    <div className="menu-bar">
+    <div className={`menu-bar`}>
       <div>{itemLeft} item left</div>
       <div
         id="all"

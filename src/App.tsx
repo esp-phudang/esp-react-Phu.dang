@@ -4,33 +4,28 @@ import SortBar from "./SortBar";
 import TabBar from "./TabBar";
 import TodoList from "./TodoList";
 
-
-
 function App() {
+  
   const [todoObject, setTodoObject] = useState<any>({});
   const [currentTab, setCurrentTab] = useState<string>(
     `${Object.keys(todoObject)[0]}`
   );
-  const [todoList, setTodoList] = useState<Array<TodoItem>>(todoObject[currentTab] || []);
+  const [todoList, setTodoList] = useState<Array<TodoItem>>(
+    todoObject[currentTab] || []
+  );
 
   const now = new Date();
   // get todoList from localstorage everytime user open page
   useEffect(() => {
-    const localData = JSON.parse(
-      window.localStorage.getItem("todoObject") || ""
-    );
+    const localData =
+      JSON.parse(window.localStorage.getItem("todoObject") || "") || {};
     setTodoObject(localData);
     setCurrentTab(Object.keys(localData)[0]);
-    console.log("curret Tab", currentTab);
     setTodoList(localData[Object.keys(localData)[0]]);
   }, []);
-  console.log("object", todoObject);
 
-  useEffect(() => {
-    console.log("current Tab", currentTab);
-  });
 
-  const updateListAndSaveToLocal = (list:TodoItem[]) => {
+  const updateListAndSaveToLocal = (list: TodoItem[]) => {
     setTodoList(list);
     const updatedTodoObject: any = { ...todoObject };
     updatedTodoObject[currentTab] = list;
@@ -42,26 +37,24 @@ function App() {
     );
   };
 
-  const handleAddTab = (todoObject: { [key: string]: TodoItem[]; }) => {
+  const handleAddTab = (todoObject: { [key: string]: TodoItem[] }) => {
     setTodoObject(todoObject);
     setCurrentTab(Object.keys(todoObject)[Object.keys(todoObject).length - 1]);
     setTodoList(
-      todoObject[`${Object.keys(todoObject)[Object.keys(todoObject).length - 1]}`]
+      todoObject[
+        `${Object.keys(todoObject)[Object.keys(todoObject).length - 1]}`
+      ]
     );
-    console.log(
-      "current Tabb",
-      Object.keys(todoObject)[Object.keys(todoObject).length - 1]
-    );
+
     window.localStorage.setItem("todoObject", JSON.stringify(todoObject));
   };
 
   const setTab = (e: any) => {
     //set current tab was clicked
-    setCurrentTab(e.target.getAttribute("value"));
+    setCurrentTab(e.target.textContent);
     //get current data of clicked tab
-    const currentTabData = { ...todoObject }[e.target.getAttribute("value")];
+    const currentTabData = { ...todoObject }[e.target.textContent];
     //set todoList as current clicked Data
-    console.log("currentData", currentTabData);
     setTodoList(currentTabData);
     window.localStorage.setItem("todoObject", JSON.stringify(todoObject));
   };
@@ -88,7 +81,9 @@ function App() {
 
   const handleUpdateEdit = (item: TodoItem) => {
     //get index of edited item in array
-    const indexEditedItem = todoList.map((item: TodoItem) => item.id).indexOf(item.id);
+    const indexEditedItem = todoList
+      .map((item: TodoItem) => item.id)
+      .indexOf(item.id);
     //replace item by edited item
     if (indexEditedItem !== -1) {
       todoList[indexEditedItem] = item;
@@ -109,11 +104,11 @@ function App() {
         <div className="todos-title">Todos</div>
         <div
           onClick={() => {
-            localStorage.clear();
+            window.localStorage.setItem("todoObject", JSON.stringify({}));
             setTodoObject({});
             setTodoList([]);
-            console.log("clear");
-          } }
+          }}
+          className="clear-button"
         >
           Clear Data
         </div>
@@ -121,7 +116,8 @@ function App() {
           currentTab={currentTab}
           todoObject={todoObject}
           handleAddTab={handleAddTab}
-          setTab={setTab} />
+          setTab={setTab}
+        />
         <div className="todos-main-container">
           <Input handleAdd={handleAdd} />
           <SortBar handleSort={updateListAndSaveToLocal} todoList={todoList} />
@@ -130,7 +126,8 @@ function App() {
             handleUpdateChecked={updateListAndSaveToLocal}
             todoList={todoList}
             handleUpdateEdit={handleUpdateEdit}
-            handleDelete={updateListAndSaveToLocal} />
+            handleDelete={updateListAndSaveToLocal}
+          />
         </div>
       </div>
     </div>
@@ -144,4 +141,4 @@ export interface TodoItem {
   id: string;
   status: string;
   time: Date;
-};
+}

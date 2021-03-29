@@ -11,7 +11,7 @@
     margin-left: 0;
     background-color: rgb(218, 216, 216);
   }
-  &-item-current{
+  &-item-current {
     padding: 2px 20px;
     width: auto;
     height: 15;
@@ -19,7 +19,11 @@
     background-color: white;
     z-index: 3;
     
-
-
+  }
+  input {
+    border:1px solid grey;
+    &:focus {
+      outline: none;
+    }
   }
 }

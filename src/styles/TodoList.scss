@@ -35,6 +35,17 @@
     align-items: center;
     justify-content: space-between;
     margin: -1px auto;
+    flex-basis: 1;
+    &-edit{
+      width:10%;
+      display:flex;
+      justify-content: center;
+    }
+    input {
+      &:focus {
+        outline: none;
+      }
+    }
   }
   .bottom-line {
     margin: 0 auto;
