@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { TodoItem } from "src/App";
 import MenuBar from "../MenuBar";
 import TodoCard from "../TodoCard/TodoCard";
+
+export interface Props {
+  todoList: TodoItem[];
+  handleDelete: (item: TodoItem[]) => void;
+  handleUpdateEdit: (item:TodoItem) => void;
+  handleUpdateChecked: (list: TodoItem[]) => void;
+  onUpdateNewList: (list: TodoItem[]) => void;
+}
 
 export default function TodoList({
   todoList,
@@ -8,12 +17,12 @@ export default function TodoList({
   handleUpdateEdit,
   handleUpdateChecked,
   onUpdateNewList,
-}) {
-  const [editContent, setEditContent] = useState();
-  const [editId, setEditId] = useState();
+}: Props) {
+  const [editContent, setEditContent] = useState<string | undefined>();
+  const [editId, setEditId] = useState<string | undefined>();
   const [filterState, setFilterState] = useState(["checked", "unchecked"]);
   //add item id to check List
-  const onCheck = (e) => {
+  const onCheck = (e: any) => {
     const checkedId = e.target.id;
     const checkedIndex = todoList?.map((item) => item.id).indexOf(checkedId);
     // I used subTodoList = todoList but it is shallow copy so todoList's items
@@ -29,9 +38,10 @@ export default function TodoList({
     handleUpdateChecked(subTodoList);
   };
 
-  const onDelete = (deleteItem) => {
+  const onDelete = (deleteItem: any) => {
     //get the index of deleted item
-    const deleteId = todoList?.map((item) => item.id)
+    const deleteId = todoList
+      ?.map((item) => item.id)
       .indexOf(deleteItem.target.id);
     //get deleted item
     const deletedItem = todoList[deleteId];
@@ -39,12 +49,11 @@ export default function TodoList({
     handleDelete(todoList.filter((item) => item !== deletedItem));
   };
 
-  const onEdit = (e) => {
+  const onEdit = (e: any) => {
     //get value of edit item, error "value" is not property of HTMLElement due to using .value,
     //so I use array destrucering instead
-    const editItemContent = document.getElementById(`No ${e.target.id}`)[
-      "value"
-    ];
+    const editItem: any = document.getElementById(`No ${e.target.id}`)!;
+    const editItemContent = editItem["value"];
     //set id of what item is edited
     setEditId(`No ${e.target.id}`);
     //set content of edited item
@@ -52,7 +61,7 @@ export default function TodoList({
   };
 
   const onCancelEdit = () => {
-    setEditId(null);
+    setEditId("");
   };
   const handleShowChecked = () => {
     setFilterState(["checked"]);
@@ -63,15 +72,15 @@ export default function TodoList({
   const handleShowAll = () => {
     setFilterState(["checked", "unchecked"]);
   };
-  const drag = (e) => {
+  const drag = (e: any) => {
     //save id of dragged item
     e.dataTransfer.setData("text", e.target.id);
   };
-  const allowDrag = (e) => {
+  const allowDrag = (e: any) => {
     //prevent default of onDragOver method - trigger Link
     e.preventDefault();
   };
-  const drop = (e) => {
+  const drop = (e: any) => {
     //prevent default of onDrop method - trigger Link
     e.preventDefault();
     const draggedItem = e.dataTransfer.getData("text");
@@ -90,10 +99,15 @@ export default function TodoList({
         return (
           //set filterState is an array, filter todoItem depends on state in filterState
           filterState.includes(item.status) && (
-            <div key={index} id={index} onDrop={drop} onDragOver={allowDrag}>
+            <div
+              key={index}
+              id={String(index)}
+              onDrop={drop}
+              onDragOver={allowDrag}
+            >
               <TodoCard
                 drag={drag}
-                draggable="true"
+                draggable={true}
                 item={item}
                 editId={editId}
                 editContent={editContent}
@@ -105,7 +119,7 @@ export default function TodoList({
                 setEditContent={setEditContent}
                 handleUpdateEdit={handleUpdateEdit}
               />
-              <hr className="bottom-line"/>
+              <hr className="bottom-line" />
             </div>
           )
         );

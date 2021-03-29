@@ -4,29 +4,35 @@ import SortBar from "./SortBar";
 import TabBar from "./TabBar";
 import TodoList from "./TodoList";
 
-const App = () => {
-  const [todoObject, setTodoObject] = useState({});
-  const [currentTab, setCurrentTab] = useState(`${Object.keys(todoObject)[0]}`);
-  const [todoList, setTodoList] = useState(todoObject[currentTab] || []);
+
+
+function App() {
+  const [todoObject, setTodoObject] = useState<any>({});
+  const [currentTab, setCurrentTab] = useState<string>(
+    `${Object.keys(todoObject)[0]}`
+  );
+  const [todoList, setTodoList] = useState<Array<TodoItem>>(todoObject[currentTab] || []);
 
   const now = new Date();
   // get todoList from localstorage everytime user open page
-  useEffect(() => {
-    const localData = JSON.parse(window.localStorage.getItem("todoObject"));
-    setTodoObject(localData);
-    setCurrentTab(Object.keys(localData)[0]);
-    console.log("curret Tab", currentTab);
-    setTodoList(localData[Object.keys(localData)[0]]);
-  }, []);
+  // useEffect(() => {
+  //   const localData = JSON.parse(
+  //     window.localStorage.getItem("todoObject") || ""
+  //   );
+  //   setTodoObject(localData);
+  //   setCurrentTab(Object.keys(localData)[0]);
+  //   console.log("curret Tab", currentTab);
+  //   setTodoList(localData[Object.keys(localData)[0]]);
+  // }, []);
   console.log("object", todoObject);
 
   useEffect(() => {
     console.log("current Tab", currentTab);
   });
 
-  const updateListAndSaveToLocal = (list) => {
+  const updateListAndSaveToLocal = (list:TodoItem[]) => {
     setTodoList(list);
-    const updatedTodoObject = { ...todoObject };
+    const updatedTodoObject: any = { ...todoObject };
     updatedTodoObject[currentTab] = list;
     setTodoObject(updatedTodoObject);
 
@@ -36,13 +42,11 @@ const App = () => {
     );
   };
 
-  const handleAddTab = (todoObject) => {
+  const handleAddTab = (todoObject: { [key: string]: TodoItem[]; }) => {
     setTodoObject(todoObject);
     setCurrentTab(Object.keys(todoObject)[Object.keys(todoObject).length - 1]);
     setTodoList(
-      todoObject[
-        `${Object.keys(todoObject)[Object.keys(todoObject).length - 1]}`
-      ]
+      todoObject[`${Object.keys(todoObject)[Object.keys(todoObject).length - 1]}`]
     );
     console.log(
       "current Tabb",
@@ -51,7 +55,7 @@ const App = () => {
     window.localStorage.setItem("todoObject", JSON.stringify(todoObject));
   };
 
-  const setTab = (e) => {
+  const setTab = (e: any) => {
     //set current tab was clicked
     setCurrentTab(e.target.getAttribute("value"));
     //get current data of clicked tab
@@ -62,7 +66,7 @@ const App = () => {
     window.localStorage.setItem("todoObject", JSON.stringify(todoObject));
   };
 
-  const handleAdd = (value, id) => {
+  const handleAdd = (value: string, id: number) => {
     let subTodoList = [
       ...todoList,
       {
@@ -73,7 +77,7 @@ const App = () => {
       },
     ];
     setTodoList(subTodoList);
-    const updatedTodoObject = { ...todoObject };
+    const updatedTodoObject: any = { ...todoObject };
     updatedTodoObject[currentTab] = subTodoList;
     setTodoObject(updatedTodoObject);
     window.localStorage.setItem(
@@ -82,15 +86,15 @@ const App = () => {
     );
   };
 
-  const handleUpdateEdit = (item) => {
+  const handleUpdateEdit = (item: TodoItem) => {
     //get index of edited item in array
-    const indexEditedItem = todoList.map((item) => item.id).indexOf(item.id);
+    const indexEditedItem = todoList.map((item: TodoItem) => item.id).indexOf(item.id);
     //replace item by edited item
     if (indexEditedItem !== -1) {
       todoList[indexEditedItem] = item;
     }
     setTodoList(todoList);
-    const updatedTodoObject = { ...todoObject };
+    const updatedTodoObject: any = { ...todoObject };
     updatedTodoObject[currentTab] = todoList;
     setTodoObject(updatedTodoObject);
     window.localStorage.setItem(
@@ -109,7 +113,7 @@ const App = () => {
             setTodoObject({});
             setTodoList([]);
             console.log("clear");
-          }}
+          } }
         >
           Clear Data
         </div>
@@ -117,8 +121,7 @@ const App = () => {
           currentTab={currentTab}
           todoObject={todoObject}
           handleAddTab={handleAddTab}
-          setTab={setTab}
-        />
+          setTab={setTab} />
         <div className="todos-main-container">
           <Input handleAdd={handleAdd} />
           <SortBar handleSort={updateListAndSaveToLocal} todoList={todoList} />
@@ -127,12 +130,18 @@ const App = () => {
             handleUpdateChecked={updateListAndSaveToLocal}
             todoList={todoList}
             handleUpdateEdit={handleUpdateEdit}
-            handleDelete={updateListAndSaveToLocal}
-          />
+            handleDelete={updateListAndSaveToLocal} />
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default App;
+
+export interface TodoItem {
+  content: string | undefined;
+  id: string;
+  status: string;
+  time: Date;
+};

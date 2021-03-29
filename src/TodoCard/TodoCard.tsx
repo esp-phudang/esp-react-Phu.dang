@@ -1,20 +1,35 @@
 import React from "react";
-const TodoCard = (props) => {
-  const {
-    onCancelEdit,
-    onDelete,
-    setEditId,
-    handleUpdateEdit,
-    onEdit,
-    item,
-    onCheck,
-    setEditContent,
-    editId,
-    editContent,
-    draggable,
-    drag,
-  } = props;
+import { TodoItem } from "src/App";
 
+export interface Props {
+  onCancelEdit: () => void;
+  onDelete: (e:HTMLDivElement) => void;
+  setEditId: (id:string) => void;
+  handleUpdateEdit: (item:TodoItem)=>void;
+  onEdit: (e:HTMLDivElement) => void;
+  item: TodoItem;
+  onCheck: (e:HTMLImageElement) => void;
+  setEditContent: (content:string) => void;
+  editId: string | undefined;
+  editContent: string | undefined;
+  draggable: boolean;
+  drag: (e:any) => void;
+}
+
+const TodoCard = ({
+  onCancelEdit,
+  onDelete,
+  setEditId,
+  handleUpdateEdit,
+  onEdit,
+  item,
+  onCheck,
+  setEditContent,
+  editId,
+  editContent,
+  draggable,
+  drag,
+}: Props) => {
   return (
     <div
       onDragStart={drag}
@@ -30,7 +45,7 @@ const TodoCard = (props) => {
             ? "../../public/assets/checked-box.png"
             : "../../public/assets/box.png"
         }
-        onClick={(e) => {
+        onClick={(e:any) => {
           onCheck(e);
         }}
       />
@@ -48,11 +63,13 @@ const TodoCard = (props) => {
         //if item's id is the same as editId, input will display value of temporary edit content
         value={editId === `No ${item.id}` ? editContent : item.content}
       />
-      <div>{String(item.time).slice(0,10) + " " + String(item.time).slice(11,19)}</div>
+      <div>
+        {String(item.time).slice(0, 10) + " " + String(item.time).slice(11, 19)}
+      </div>
       {!(editId === `No ${item.id}`) && (
         <div
           id={item.id}
-          onClick={(e) => {
+          onClick={(e:any) => {
             onEdit(e);
           }}
         >
@@ -63,7 +80,7 @@ const TodoCard = (props) => {
         <div
           onClick={() => {
             handleUpdateEdit({ ...item, content: editContent });
-            setEditId(null);
+            setEditId("");
           }}
         >
           Save
@@ -73,7 +90,7 @@ const TodoCard = (props) => {
       {editId === `No ${item.id}` && <div onClick={onCancelEdit}>Cancel</div>}
       <div
         id={item.id}
-        onClick={(e) => {
+        onClick={(e:any) => {
           onDelete(e);
         }}
       >

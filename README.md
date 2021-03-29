@@ -10,6 +10,7 @@
     - sass
     - webpack
 - What you have learned from every chapter
+    - set up tsx, have to install tsconfig.json 
     - install prettier and Ctrl+P choose Format Document, then choose format document  with Prettier and set a shortcut for this extension
     - what is package-lock.json
     - setup sass
@@ -21,4 +22,7 @@
     - When you drop anything on the child element or any event takes place on the child element, the Event Target is always the child element because that is the place where the event took place. That is the target.
     - if you want to trigger event in parent, call (e.currentTarget.id)
     - using localStorage to store data in local, localStorage store data in string, using JSON strinlify and parse to convert data
+    - TS is doing its job and tells you that window.document.getElementById("foobar") COULD return something that is null.
+      - If you are absolutely sure that #foobar element DOES exist in your DOM, you can show TS your confidence with a ! operator. const editItem: any = document.getElementById(`No ${e.target.id}`)! 
+
     

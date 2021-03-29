@@ -34,6 +34,11 @@ module.exports = {
         }
       },
       {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: "/node_modules/",
+      },
+      {
         test: /\.s[ac]ss$/i,
         use: [
           //loader order: sass-loader->css-loader->style-loader

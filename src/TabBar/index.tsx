@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-const TabBar = ({ setTab, handleAddTab, todoObject,currentTab }) => {
-  const [tabName, setTabName] = useState();
-  const chooseTab = (e) => {
+import { TodoItem } from "src/App";
+
+export interface Props {
+  setTab:(e:any)=>void
+  handleAddTab:(obj:{ [key: string]: TodoItem[]; })=>void
+  todoObject:()=>void
+  currentTab:string
+}
+
+const TabBar = ({ setTab, handleAddTab, todoObject,currentTab }:Props) => {
+  const [tabName, setTabName] = useState<string>("");
+  const chooseTab = (e:any) => {
     setTab(e);
   };
   const addTab = () => {
-    const newObject = { ...todoObject };
+    const newObject:any = { ...todoObject };
     newObject[tabName] = [];
     handleAddTab(newObject);
     setTabName(" ");
@@ -21,7 +30,7 @@ const TabBar = ({ setTab, handleAddTab, todoObject,currentTab }) => {
           value={tabName}
           onKeyDown={(e) => {
             if (e.keyCode === 13) {
-              document.getElementById("addTab").click();
+              document.getElementById("addTab")?.click();
             }
           }}
         />
@@ -36,7 +45,7 @@ const TabBar = ({ setTab, handleAddTab, todoObject,currentTab }) => {
               key={index}
               onClick={chooseTab}
               className={currentTab === tab ? "tab-bar-item-current" : "tab-bar-item"}
-              value={tab}
+              // value={tab}
             >
               {tab}
             </div>

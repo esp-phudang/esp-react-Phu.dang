@@ -1,19 +1,25 @@
 import React, { useState } from "react";
-
+import { TodoItem } from "../App";
+export interface Props {
+  todoList: Array<TodoItem>;
+  handleShowChecked: () => void;
+  handleShowUnChecked: () => void;
+  handleShowAll: () => void;
+}
 const MenuBar = ({
   todoList,
   handleShowChecked,
   handleShowUnChecked,
   handleShowAll,
-}) => {
+}: Props) => {
   const [sortType, setSortType] = useState("");
-  const sort = (e) => {
+  const sort = (e: any) => {
     setSortType(e.target.id);
   };
   const itemLeft = todoList
     ? todoList
         .map((item) => item.status)
-        .filter((status) => status === "unchecked").length
+        .filter((status: string) => status === "unchecked").length
     : "";
   return (
     <div className="menu-bar">
@@ -22,9 +28,9 @@ const MenuBar = ({
         id="all"
         onClick={(e) => {
           sort(e);
-          handleShowAll()
+          handleShowAll();
         }}
-        className={sortType === "" && "sorted"}
+        className={sortType === "" ? "sorted" : ""}
       >
         All
       </div>
@@ -32,9 +38,9 @@ const MenuBar = ({
         id="active"
         onClick={(e) => {
           sort(e);
-          handleShowUnChecked()
+          handleShowUnChecked();
         }}
-        className={sortType === "active" && "sorted"}
+        className={sortType === "active" ? "sorted" : ""}
       >
         Active
       </div>
@@ -42,9 +48,9 @@ const MenuBar = ({
         id="completed"
         onClick={(e) => {
           sort(e);
-          handleShowChecked()
+          handleShowChecked();
         }}
-        className={sortType === "completed" && "sorted"}
+        className={sortType === "completed" ? "sorted" : ""}
       >
         Completed
       </div>

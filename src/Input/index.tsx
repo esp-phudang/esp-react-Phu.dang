@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
-export const Input = (props) => {
-  const { handleAdd } = props;
+import React, { useState } from "react";
+export interface Props {
+  handleAdd: (inputValue:string, id:number) => void;
+}
+export const Input = ({ handleAdd }:Props) => {
   const [inputValue, setInputValue] = useState("");
-  const input = document.getElementById("myInput");
 
+  
   return (
     <div className="todos-add-new">
       <input
@@ -16,7 +18,7 @@ export const Input = (props) => {
         onKeyDown={(e) => {
           //defined what key is pressed and if keycode is 13, thats Enter
           if (e.keyCode === 13) {
-            document.getElementById("addTodoItem").click();
+            document.getElementById("addTodoItem")?.click();
           }
         }}
         value={inputValue}
