@@ -6,7 +6,7 @@ import TodoCard from "../TodoCard/TodoCard";
 export interface Props {
   todoList: TodoItem[];
   handleDelete: (item: TodoItem[]) => void;
-  handleUpdateEdit: (item:TodoItem) => void;
+  handleUpdateEdit: (item: TodoItem) => void;
   handleUpdateChecked: (list: TodoItem[]) => void;
   onUpdateNewList: (list: TodoItem[]) => void;
 }
@@ -92,6 +92,7 @@ export default function TodoList({
     newList[indexDragItem] = todoList[e.currentTarget.id];
     onUpdateNewList(newList);
   };
+  console.log(todoList?.length === 0, todoList, typeof todoList);
 
   return (
     <div style={{ width: "100%" }}>
@@ -124,6 +125,9 @@ export default function TodoList({
           )
         );
       })}
+      {todoList?.length === 0 || todoList == undefined && (
+        <div className="empty-list">Nothing to do here! B*tch!</div>
+      )}
       <MenuBar
         todoList={todoList}
         handleShowChecked={handleShowChecked}

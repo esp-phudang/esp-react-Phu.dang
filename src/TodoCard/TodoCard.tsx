@@ -49,7 +49,8 @@ const TodoCard = ({
           onCheck(e);
         }}
       />
-      <input
+      <textarea
+      
         disabled={editId === `No ${item.id}` ? false : true}
         //set multic className condition
         className={`${item.status === "checked" ? "checked" : null} ${

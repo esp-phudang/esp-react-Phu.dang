@@ -1,15 +1,13 @@
 @import "./color.scss";
 
-.body {
+#root {
+  height:100%;
+  width:100%;
   background-color: antiquewhite;
-  width: 100vw;
-  height: 100vh;
-  margin: -8px;
-  display: flex;
-  justify-content: center;
+  overflow-y: auto;
   font-family:'Courier New', Courier, monospace;
   .todos{
-    margin-top:100px;
+    margin: 100px auto;
     &-title{
       font-size: 100px;
     }

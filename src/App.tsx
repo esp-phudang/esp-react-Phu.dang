@@ -99,7 +99,6 @@ function App() {
   };
 
   return (
-    <div className="body">
       <div className="todos">
         <div className="todos-title">Todos</div>
         <div
@@ -130,7 +129,6 @@ function App() {
           />
         </div>
       </div>
-    </div>
   );
 }
 
