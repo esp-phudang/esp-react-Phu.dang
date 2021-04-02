@@ -13,7 +13,7 @@
   height: 500px;
 
   &-add-new {
-    height: 50px;
+    height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,7 +21,7 @@
     padding: 0 20px;
     .add-new {
       font-family: "Courier New", Courier, monospace;
-
+      font-size:20px;
       width: 90%;
       border: none;
       &:focus {
@@ -30,7 +30,7 @@
     }
   }
   &-item {
-    padding: 0 20px;
+    padding: 0 20px 0 30px;
     background-color: white;
     height: 60px;
     display: flex;

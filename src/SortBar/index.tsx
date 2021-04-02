@@ -5,7 +5,7 @@ export interface Props {
   todoList: Array<TodoItem>;
 }
 
-const SortBar = ({ handleSort, todoList }: Props) => {
+const SortBar =  ({ handleSort, todoList }: Props) => {
   const [alphabet, setAlphabet] = useState(true);
   const [time, setTime] = useState(true);
 
@@ -38,9 +38,13 @@ const SortBar = ({ handleSort, todoList }: Props) => {
 
   return (
     <div className="sort-bar">
-      <div />
-      <div onClick={sortByAlphabet}>{alphabet ? "A to B" : "B to A"}</div>
-      <div onClick={sortByCreatedTime}>{time ? "latest" : "oldest"}</div>
+      <div>Status</div>
+      <div onClick={sortByAlphabet}>
+        {alphabet ? "Sort A to Z" : "Sort Z to A"}
+      </div>
+      <div onClick={sortByCreatedTime}>
+        {time ? "Sort newest" : "Sort oldest"}
+      </div>
       <div />
       <div />
     </div>

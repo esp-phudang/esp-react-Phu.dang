@@ -17,7 +17,7 @@ const TabBar = ({ setTab, handleAddTab, todoObject, currentTab }: Props) => {
     const newObject: any = { ...todoObject };
     newObject[tabName] = [];
     handleAddTab(newObject);
-    setTabName(" ");
+    setTabName("");
   };
 
   return (

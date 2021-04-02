@@ -5,7 +5,6 @@ import TabBar from "./TabBar";
 import TodoList from "./TodoList";
 
 function App() {
-  
   const [todoObject, setTodoObject] = useState<any>({});
   const [currentTab, setCurrentTab] = useState<string>(
     `${Object.keys(todoObject)[0]}`
@@ -23,7 +22,6 @@ function App() {
     setCurrentTab(Object.keys(localData)[0]);
     setTodoList(localData[Object.keys(localData)[0]]);
   }, []);
-
 
   const updateListAndSaveToLocal = (list: TodoItem[]) => {
     setTodoList(list);
@@ -60,23 +58,27 @@ function App() {
   };
 
   const handleAdd = (value: string, id: number) => {
-    let subTodoList = [
-      ...todoList,
-      {
-        content: value,
-        id: String(id),
-        status: "unchecked",
-        time: now,
-      },
-    ];
-    setTodoList(subTodoList);
-    const updatedTodoObject: any = { ...todoObject };
-    updatedTodoObject[currentTab] = subTodoList;
-    setTodoObject(updatedTodoObject);
-    window.localStorage.setItem(
-      "todoObject",
-      JSON.stringify(updatedTodoObject)
-    );
+    if (todoList) {
+      let subTodoList = [
+        ...todoList,
+        {
+          content: value,
+          id: String(id),
+          status: "unchecked",
+          time: JSON.parse(JSON.stringify(now)),
+        },
+      ];
+      setTodoList(subTodoList);
+      const updatedTodoObject: any = { ...todoObject };
+      updatedTodoObject[currentTab] = subTodoList;
+      setTodoObject(updatedTodoObject);
+      window.localStorage.setItem(
+        "todoObject",
+        JSON.stringify(updatedTodoObject)
+      );
+    } else {
+      alert("Add new todo List please");
+    }
   };
 
   const handleUpdateEdit = (item: TodoItem) => {
@@ -99,36 +101,36 @@ function App() {
   };
 
   return (
-      <div className="todos">
-        <div className="todos-title">Todos</div>
-        <div
-          onClick={() => {
-            window.localStorage.setItem("todoObject", JSON.stringify({}));
-            setTodoObject({});
-            setTodoList([]);
-          }}
-          className="clear-button"
-        >
-          Clear Data
-        </div>
-        <TabBar
-          currentTab={currentTab}
-          todoObject={todoObject}
-          handleAddTab={handleAddTab}
-          setTab={setTab}
-        />
-        <div className="todos-main-container">
-          <Input handleAdd={handleAdd} />
-          <SortBar handleSort={updateListAndSaveToLocal} todoList={todoList} />
-          <TodoList
-            onUpdateNewList={updateListAndSaveToLocal}
-            handleUpdateChecked={updateListAndSaveToLocal}
-            todoList={todoList}
-            handleUpdateEdit={handleUpdateEdit}
-            handleDelete={updateListAndSaveToLocal}
-          />
-        </div>
+    <div className="todos">
+      <div className="todos-title">Todos</div>
+      <div
+        onClick={() => {
+          window.localStorage.setItem("todoObject", JSON.stringify({}));
+          setTodoObject({});
+          setTodoList([]);
+        }}
+        className="clear-button"
+      >
+        Clear Data
       </div>
+      <TabBar
+        currentTab={currentTab}
+        todoObject={todoObject}
+        handleAddTab={handleAddTab}
+        setTab={setTab}
+      />
+      <div className="todos-main-container">
+        <Input handleAdd={handleAdd} />
+        <SortBar handleSort={updateListAndSaveToLocal} todoList={todoList} />
+        <TodoList
+          onUpdateNewList={updateListAndSaveToLocal}
+          handleUpdateChecked={updateListAndSaveToLocal}
+          todoList={todoList}
+          handleUpdateEdit={handleUpdateEdit}
+          handleDelete={updateListAndSaveToLocal}
+        />
+      </div>
+    </div>
   );
 }
 

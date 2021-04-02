@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TodoItem } from "src/App";
 import MenuBar from "../MenuBar";
 import TodoCard from "../TodoCard/TodoCard";
@@ -18,6 +18,14 @@ export default function TodoList({
   handleUpdateChecked,
   onUpdateNewList,
 }: Props) {
+  useEffect(() => {
+    console.log(
+      "status",
+      todoList,
+      typeof todoList,
+      todoList === undefined || todoList?.length === 0
+    );
+  });
   const [editContent, setEditContent] = useState<string | undefined>();
   const [editId, setEditId] = useState<string | undefined>();
   const [filterState, setFilterState] = useState(["checked", "unchecked"]);
@@ -92,7 +100,6 @@ export default function TodoList({
     newList[indexDragItem] = todoList[e.currentTarget.id];
     onUpdateNewList(newList);
   };
-  console.log(todoList?.length === 0, todoList, typeof todoList);
 
   return (
     <div style={{ width: "100%" }}>
@@ -125,7 +132,7 @@ export default function TodoList({
           )
         );
       })}
-      {todoList?.length === 0 || todoList == undefined && (
+      {!(todoList !== undefined && todoList?.length !== 0) && (
         <div className="empty-list">Nothing to do here! B*tch!</div>
       )}
       <MenuBar
